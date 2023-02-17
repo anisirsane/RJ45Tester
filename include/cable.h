@@ -1,14 +1,14 @@
 ///ficher.h
-#ifndef CABLE_HPP
-   #define CABLE_HPP
+#ifndef CABLE_H
+   #define CABLE_H
 
 #include<Arduino.h>
 #include<string.h>
+//on cree notre classe ici avec le constructeur et ses fonctions
 class Cable{
     // Declaration des attribue
     private:
         int Broche1, Broche2, Broche3, Broche4, Broche5, Broche6, Broche7, Broche8; 
-    // Declaration constrecteur par default 
     public : 
         
         int Tab[7];

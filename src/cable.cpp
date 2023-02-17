@@ -1,5 +1,6 @@
 #include <cable.h>
 #include<Arduino.h>
+//dans cette partie on initialise nos fonctions
     Cable::Cable(int Broche1, int Broche2, int Broche3, int Broche4, int Broche5, int Broche6, int Broche7, int Broche8){
 
         this->Broche1 = Broche1;
@@ -11,6 +12,7 @@
         this->Broche7 = Broche7;
         this->Broche8 = Broche8;
     };
+
 
     void Cable::TableauCable(){
          Tab[0] = this->Broche1;

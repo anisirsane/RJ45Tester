@@ -1,9 +1,19 @@
+/*
+  Titre      :testeur rj45
+  Auteur     : Anis Irsane
+  Date       : 17-02-23
+  Description: code qui teste si un cable rj45 est droit ou croise
+  Version    : 0.0.3
+*/
+
+
+
 #include <Arduino.h>
 #include <cable.h>
 #include<string.h>
 
 //declaration des broches
-//le cote des input
+// input
 const int BROCHE1_1 = 13;
 const int BROCHE1_2 = 14;
 const int BROCHE1_3 = 15;
@@ -12,7 +22,7 @@ const int BROCHE1_5 = 17;
 const int BROCHE1_6 = 10;
 const int BROCHE1_7 = 11;
 const int BROCHE1_8 = 12;
-//le cote des output
+//output
 const int BROCHE2_1 = 2;
 const int BROCHE2_2 = 3;
 const int BROCHE2_3 = 4;
@@ -23,15 +33,16 @@ const int BROCHE2_7 = 8;
 const int BROCHE2_8 = 9;
 
 int val1, val2;
+//instanciation de nos deux objets
 Cable Cable1(BROCHE1_1, BROCHE1_2, BROCHE1_3, BROCHE1_4, BROCHE1_5, BROCHE1_6, BROCHE1_7, BROCHE1_8);
 Cable Cable2(BROCHE2_1, BROCHE2_2, BROCHE2_3, BROCHE2_4, BROCHE2_5, BROCHE2_6, BROCHE2_7, BROCHE2_8);
-
+//pour sauvegarder le type du cable
 String cabletype;
 
 
 
 void setup() {
-  // put your setup code here, to run once:
+  // initialisation de nos broches
         pinMode(BROCHE1_1, OUTPUT);
         pinMode(BROCHE1_2, OUTPUT);
         pinMode(BROCHE1_3, OUTPUT);
@@ -51,17 +62,25 @@ void setup() {
         pinMode(BROCHE2_8, INPUT);
         
         Serial.begin(9600);
+        //initialisation de deux arrays au'on a cree depuis les deux objets pour qu'on pourais faire des iterations sur eux 
+        //cette iteration avec les boucles est beaucoup plus utile avec le cable droit parceque c'est beaucoup plus simple 
+        //mais avec le croise je me trouve oblige de hardcoder tous les tests sur toutes les 8 fils
         Cable1.TableauCable(); 
         Cable2.TableauCable();
 }
 
 void loop() {
   Cable1.initialisation();
+  //on envoie le signal sur la brcohe 1...si on eu un signal sur la broche 3 on le concidere comme un cable croise au debut, si
+  //on a eu un signal sur le cable 1 on le concidere comme un cable droit
+  //cela et juste pour l'initialisation, donc on continue a verifier pour les restes des broches
   digitalWrite(BROCHE1_1,HIGH);
   val1=digitalRead(BROCHE2_1);
   val2=digitalRead(BROCHE2_3);
+  //pour le cable droit
   if(val1==1){
     cabletype="droit";
+    //puisque le cable 1 fonctionne, on fait une boucle pour les fils 2 a 8 et on verifie pour chacun
     Serial.println("test 1 ok ");
     for (int i = 1; i < 8; i++)
     {
@@ -73,11 +92,13 @@ void loop() {
       if(!digitalRead(Cable2.choix(i))){
         val1=0;
         Serial.print("cable non fonctionel");
+        //si le cable ne fonctionne pas donc on reinitialise la variable cabletype a vide.
         cabletype="";
         break;
       }
       delay(1000);
     }
+    //pour le cable croise
     if(val1==1){
       Serial.print("le cable est: ");
       Serial.print(cabletype);
@@ -155,9 +176,10 @@ void loop() {
   } else {
         Serial.println("Le cable 1 n'est pas fonctionnel");
   }
+  //si tous les fils sont verifie donc val2 va rester a 1 donc on peut afficher que ce cable est croise
     if(val2==1){
       Serial.print("le cable est: ");
-      Serial.print(cabletype);
+      Serial.println(cabletype);
     } 
     Serial.println("----------------------------------------------------");
   delay(2000);          
