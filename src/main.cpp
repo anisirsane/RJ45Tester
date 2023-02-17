@@ -57,7 +57,6 @@ void setup() {
 
 void loop() {
   Cable1.initialisation();
-  delay(1000);
   digitalWrite(BROCHE1_1,HIGH);
   val1=digitalRead(BROCHE2_1);
   val2=digitalRead(BROCHE2_3);
@@ -73,7 +72,7 @@ void loop() {
 
       if(!digitalRead(Cable2.choix(i))){
         val1=0;
-        Serial.print("cable non fonctionant");
+        Serial.print("cable non fonctionel");
         cabletype="";
         break;
       }
@@ -84,42 +83,85 @@ void loop() {
       Serial.print(cabletype);
     }
     } else if(val2==1){
-    digitalWrite(BROCHE1_3, HIGH);
-    Serial.println(digitalRead(BROCHE2_1));
-    if(digitalRead(BROCHE2_1) == 1){
-      digitalWrite(BROCHE1_6,HIGH);
-        Serial.println(digitalRead(BROCHE2_2));
-      if(digitalRead(BROCHE2_2) == 1){
-    cabletype="croise";
-    Serial.println("test 1 ok ");
-    int i = 0;
-    for (i = 3 ; i <= 7; i++)
-    { 
-      if (i != 5)
-      {
-      digitalWrite(Cable1.choix(i),HIGH);
-      if(digitalRead(Cable2.choix(i))==0){
-        val2=0;
-        Serial.print("cable non fonctionant");
-        cabletype="";
-        break;
-      }
-      Serial.print("test ");
-      Serial.print(i+1);
-      Serial.println(" ok");
-      };
-      
-    delay(1000);
-    }
+      cabletype="croise";
+            Serial.println("TEST 1 OK");
+            digitalWrite(BROCHE1_2,HIGH); 
+            if(digitalRead(BROCHE2_6)==1){
+                  Serial.println("TEST 2 OK");
+                  delay(1000);
+                  digitalWrite(BROCHE1_3,HIGH); 
+                  if(digitalRead(BROCHE2_1)==1){
+                        Serial.println("TEST 3 OK");
+                        delay(1000);
+                        digitalWrite(BROCHE1_4,HIGH); 
+                        if(digitalRead(BROCHE2_4)==1){
+                            Serial.println("TEST 4 OK");
+                            delay(1000);
+                            digitalWrite(BROCHE1_5,HIGH); 
+                            if(digitalRead(BROCHE2_5)==1){
+                                Serial.println("TEST 5 OK");
+                                delay(1000);
+                                digitalWrite(BROCHE1_6,HIGH); 
+                                if(digitalRead(BROCHE2_2)==1){
+                                     Serial.println("TEST 6 OK"); 
+                                    delay(1000);
+                                    digitalWrite(BROCHE1_7,HIGH); 
+                                    if(digitalRead(BROCHE2_7)==1){
+                                         Serial.println("TEST 7 OK");
+                                         delay(1000);
+                                         digitalWrite(BROCHE1_8,HIGH); 
+                                         if(digitalRead(BROCHE2_8)==1){
+                                            Serial.println("TEST 8 OK");
+                                            Serial.println("Le cable est Fonctionnel"); 
+                                            Serial.print("Le type de Cable est : "); 
+                                            Serial.println(cabletype);
+                                         } 
+                                         else {
+                                           Serial.println("Le cable 8n'est pas Fonctionnel");
+                                           val2=0; 
+                                         }   
+                                    delay(1000);
+                                    }
+                                    else {
+                                         Serial.println("Le cable 7 n'est pas Fonctionnel"); 
+                                         val2=0;
+                                    }  
+                                }
+                                else {
+                                  Serial.println("Le cable 6 n'est pas Fonctionnel"); 
+                                  val2=0;
+                                }
+                            } 
+                            else{
+                              Serial.println("Le cable 5 n'est pas Fonctionnel");
+                              val2=0; 
+                            }             
+                        }
+                        else {
+                          Serial.println("Le cable 4 n'est pas Fonctionnel"); 
+                          val2=0;
+                        }     
+                  } 
+                  else {
+                    Serial.println("Le cable 3 n'est pas fonctionnel");
+                    val2=0;
+                  }
+            }
+            else {
+                    Serial.println("Le cable 2 n'est pas fonctionnel");
+                    val2=0;
+            }
+          delay(1000);
+  } else {
+        Serial.println("Le cable 1 n'est pas fonctionnel");
+  }
     if(val2==1){
       Serial.print("le cable est: ");
       Serial.print(cabletype);
-    }          
-  }
-  }
-  }
+    } 
+    Serial.println("----------------------------------------------------");
+  delay(2000);          
+    }
 
   
-  Serial.println("----------------------------------------------------");
-  delay(2000);
-}
+ 
