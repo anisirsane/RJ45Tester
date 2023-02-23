@@ -3,7 +3,7 @@
   Auteur     : Anis Irsane
   Date       : 17-02-23
   Description: code qui teste si un cable rj45 est droit ou croise
-  Version    : 0.0.3
+  Version    : 0.0.4
 */
 
 
@@ -31,7 +31,7 @@ const int BROCHE2_5 = 6;
 const int BROCHE2_6 = 7;
 const int BROCHE2_7 = 8;
 const int BROCHE2_8 = 9;
-
+uint8_t Var1 = 0x01;
 int val1, val2;
 //instanciation de nos deux objets
 Cable Cable1(BROCHE1_1, BROCHE1_2, BROCHE1_3, BROCHE1_4, BROCHE1_5, BROCHE1_6, BROCHE1_7, BROCHE1_8);
@@ -78,11 +78,11 @@ void loop() {
   val1=digitalRead(BROCHE2_1);
   val2=digitalRead(BROCHE2_3);
   //pour le cable droit
-  if(val1==1){
+  if(val1==Var1){
     cabletype="droit";
     //puisque le cable 1 fonctionne, on fait une boucle pour les fils 2 a 8 et on verifie pour chacun
     Serial.println("test 1 ok ");
-    for (int i = 1; i < 8; i++)
+    for (int i = 0x01; i < 0x08; i++)
     {
       Serial.print("test ");
       Serial.print(i+1);
@@ -90,7 +90,7 @@ void loop() {
       digitalWrite(Cable1.choix(i),HIGH);
 
       if(!digitalRead(Cable2.choix(i))){
-        val1=0;
+        val1=0x00;
         Serial.print("cable non fonctionel");
         //si le cable ne fonctionne pas donc on reinitialise la variable cabletype a vide.
         cabletype="";
@@ -99,39 +99,39 @@ void loop() {
       delay(1000);
     }
     //pour le cable croise
-    if(val1==1){
+    if(val1==Var1){
       Serial.print("le cable est: ");
       Serial.print(cabletype);
     }
-    } else if(val2==1){
+    } else if(val2==Var1){
       cabletype="croise";
             Serial.println("TEST 1 OK");
             digitalWrite(BROCHE1_2,HIGH); 
-            if(digitalRead(BROCHE2_6)==1){
+            if(digitalRead(BROCHE2_6)==Var1){
                   Serial.println("TEST 2 OK");
                   delay(1000);
                   digitalWrite(BROCHE1_3,HIGH); 
-                  if(digitalRead(BROCHE2_1)==1){
+                  if(digitalRead(BROCHE2_1)==Var1){
                         Serial.println("TEST 3 OK");
                         delay(1000);
                         digitalWrite(BROCHE1_4,HIGH); 
-                        if(digitalRead(BROCHE2_4)==1){
+                        if(digitalRead(BROCHE2_4)==Var1){
                             Serial.println("TEST 4 OK");
                             delay(1000);
                             digitalWrite(BROCHE1_5,HIGH); 
-                            if(digitalRead(BROCHE2_5)==1){
+                            if(digitalRead(BROCHE2_5)==Var1){
                                 Serial.println("TEST 5 OK");
                                 delay(1000);
                                 digitalWrite(BROCHE1_6,HIGH); 
-                                if(digitalRead(BROCHE2_2)==1){
+                                if(digitalRead(BROCHE2_2)==Var1){
                                      Serial.println("TEST 6 OK"); 
                                     delay(1000);
                                     digitalWrite(BROCHE1_7,HIGH); 
-                                    if(digitalRead(BROCHE2_7)==1){
+                                    if(digitalRead(BROCHE2_7)==Var1){
                                          Serial.println("TEST 7 OK");
                                          delay(1000);
                                          digitalWrite(BROCHE1_8,HIGH); 
-                                         if(digitalRead(BROCHE2_8)==1){
+                                         if(digitalRead(BROCHE2_8)==Var1){
                                             Serial.println("TEST 8 OK");
                                             Serial.println("Le cable est Fonctionnel"); 
                                             Serial.print("Le type de Cable est : "); 
